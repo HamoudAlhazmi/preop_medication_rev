@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A guided preoperative medication review for patients.">
+    <meta name="theme-color" content="#ba0c2f">
+    <title>Preoperative Medication Review</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#medication-chat">Skip to medication review</a>
+
+    <header class="site-header">
+        <div class="brand" aria-label="Preoperative Medication Review">
+            <span class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 48 48" role="img">
+                    <path d="M24 4C13 4 4 13 4 24s9 20 20 20 20-9 20-20S35 4 24 4Z"/>
+                    <path class="brand-cross" d="M21 13h6v8h8v6h-8v8h-6v-8h-8v-6h8v-8Z"/>
+                </svg>
+            </span>
+            <span>
+                <span class="eyebrow">Your surgery preparation</span>
+                <span class="brand-title">Medication Review</span>
+            </span>
+        </div>
+
+        <button class="accessibility-toggle" id="accessibility-toggle" type="button"
+                aria-expanded="false" aria-controls="accessibility-panel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="4.5" r="2.2"/>
+                <path d="M5 8.5h14M12 7v6m0 0-4 7m4-7 4 7"/>
+            </svg>
+            Display options
+        </button>
+
+        <section class="accessibility-panel" id="accessibility-panel" aria-label="Display options" hidden>
+            <div class="accessibility-control" role="group" aria-labelledby="text-size-label">
+                <span id="text-size-label">Text size</span>
+                <button id="decrease-text" type="button" aria-label="Decrease text size">A−</button>
+                <button id="increase-text" type="button" aria-label="Increase text size">A+</button>
+            </div>
+            <button class="option-button" id="contrast-toggle" type="button" aria-pressed="false">
+                <span class="option-icon contrast-icon" aria-hidden="true"></span>
+                High contrast
+            </button>
+            <button class="option-button" id="motion-toggle" type="button" aria-pressed="false">
+                <span class="option-icon motion-icon" aria-hidden="true">≈</span>
+                Reduce motion
+            </button>
+        </section>
+    </header>
+
+    <main>
+        <section class="welcome-card" aria-labelledby="page-title">
+            <div class="welcome-copy">
+                <p class="step-label">
+                    <span aria-hidden="true">✓</span>
+                    A guided review before your procedure
+                </p>
+                <h1 id="page-title">Let’s review your medications together.</h1>
+                <p>
+                    Answer a few questions about the medicines, vitamins, and supplements you take.
+                    Have your medication list or bottles nearby if possible.
+                </p>
+            </div>
+
+            <aside class="privacy-note" aria-label="Helpful reminder">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2 4.5 5v5.7c0 4.8 3.1 9.3 7.5 10.8 4.4-1.5 7.5-6 7.5-10.8V5L12 2Z"/>
+                    <path d="M9 11.5 11 14l4-5"/>
+                </svg>
+                <div>
+                    <strong>Take your time</strong>
+                    <span>You can pause to find information. Do not include information the assistant does not request.</span>
+                </div>
+            </aside>
+        </section>
+
+        <div class="status-banner offline-banner" id="offline-banner" role="status" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 3l18 18M8.7 8.7A5 5 0 0 0 7 12v3h10v-3a5 5 0 0 0-1.7-3.6M5 15h14v6H5z"/>
+            </svg>
+            <span><strong>You appear to be offline.</strong> The medication assistant will reconnect when your internet returns.</span>
+        </div>
+
+        <section class="chat-card" aria-labelledby="chat-heading">
+            <div class="chat-heading">
+                <span class="assistant-avatar" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3a7 7 0 0 0-7 7v3.5A3.5 3.5 0 0 0 8.5 17H10v-6H7v-1a5 5 0 0 1 10 0v1h-3v6h2.5a1.5 1.5 0 0 1-1.5 1.5h-2V20h2a3 3 0 0 0 3-3.1 3.5 3.5 0 0 0 1-2.4V10a7 7 0 0 0-7-7Z"/>
+                    </svg>
+                </span>
+                <div>
+                    <h2 id="chat-heading">Medication assistant</h2>
+                    <p><span class="status-dot" aria-hidden="true"></span> Ready to help</p>
+                </div>
+                <button class="expand-button" id="expand-chat" type="button" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 3H3v5M16 3h5v5M8 21H3v-5m13 5h5v-5"/>
+                    </svg>
+                    <span>Expand</span>
+                </button>
+            </div>
+
+            <div class="chat-frame-wrap">
+                <div class="loading-panel" id="loading-panel" role="status">
+                    <div class="loading-art" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <strong>Opening your medication review…</strong>
+                    <span>This may take a few seconds.</span>
+                </div>
+
+                <iframe
+                    id="medication-chat"
+                    title="Interactive preoperative medication review assistant"
+                    src="https://copilotstudio.microsoft.com/environments/2909715a-85c4-ea2d-abe4-a773323d5d1d/bots/cre2b_preoperativemedicationreviewtestv2/webchat?__version__=2"
+                    allow="microphone"
+                    referrerpolicy="strict-origin-when-cross-origin">
+                </iframe>
+
+                <noscript>
+                    <p class="no-script">
+                        JavaScript is turned off. You can still use the medication assistant in this frame,
+                        but display controls and loading feedback are unavailable.
+                    </p>
+                </noscript>
+            </div>
+        </section>
+
+        <section class="support-strip" aria-label="Important support information">
+            <div>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0-13v5m0 3v.2"/>
+                </svg>
+                <p><strong>This tool does not replace medical advice.</strong> Do not stop or change a medication unless your care team tells you to.</p>
+            </div>
+            <button id="restart-chat" type="button">Reload assistant</button>
+        </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
